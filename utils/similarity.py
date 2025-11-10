@@ -75,10 +75,10 @@ def report(text: str) -> dict:
     # Sort matches by similarity (descending)
     return dict(sorted(matches.items(), key=lambda item: item[1], reverse=True))
 
-
 def return_table(dictionary: dict) -> str:
-    """Convert results to an HTML table for display."""
+    """Convert results to an HTML table for display with clickable URLs."""
     if not dictionary:
         return "<p>No matching sites found or insufficient similarity.</p>"
     df = pd.DataFrame(list(dictionary.items()), columns=["URL", "Similarity (%)"])
-    return df.to_html(index=False, justify="center", border=1)
+    df["URL"] = df["URL"].apply(lambda x: f'<a href="{x}" target="_blank">{x}</a>')
+    return df.to_html(index=False, justify="center", border=1, escape=False)

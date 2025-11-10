@@ -1,258 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plagiarism Checker - AI-Powered Analysis</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plagiarism Checker</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: #f5f7fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      max-width: 700px;
+      width: 100%;
+      padding: 30px;
+    }
 
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 900px;
-            width: 100%;
-            padding: 50px;
-            animation: fadeIn 0.5s ease-in;
-        }
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #4a56e2;
+      font-size: 1.8em;
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #444;
+    }
 
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    textarea {
+      width: 95%;
+      min-height: 180px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 15px;
+      resize: vertical;
+    }
 
-        .header h1 {
-            color: #333;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    textarea:focus {
+      outline: none;
+      border-color: #848be2;
+      box-shadow: 0 0 0 3px rgba(74, 86, 226, 0.1);
+    }
 
-        .header p {
-            color: #666;
-            font-size: 1.1em;
-        }
+    .divider {
+      text-align: center;
+      margin: 20px 0;
+      position: relative;
+    }
 
-        .icon {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
+    .divider::before,
+    .divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: #ddd;
+    }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
+    .divider::before {
+      left: 0;
+    }
+    .divider::after {
+      right: 0;
+    }
 
-        label {
-            color: #333;
-            font-weight: 600;
-            font-size: 1.1em;
-            margin-bottom: 10px;
-            display: block;
-        }
+    .divider span {
+      background: white;
+      padding: 0 10px;
+      color: #666;
+      font-size: 0.9em;
+    }
 
-        textarea {
-            width: 100%;
-            min-height: 250px;
-            padding: 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 15px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            resize: vertical;
-            transition: all 0.3s ease;
-            background-color: #f9f9f9;
-        }
+    .file-upload {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            background-color: white;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-        }
+    .file-upload label {
+      background: #848be2;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
 
-        .file-upload-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+    .file-upload label:hover {
+      background: #3843c8;
+    }
 
-        .file-label {
-            display: inline-block;
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
+    input[type="file"] {
+      display: none;
+    }
 
-        .file-label:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
+    .file-name {
+      font-size: 0.95em;
+      color: #666;
+      font-style: italic;
+    }
 
-        input[type="file"] {
-            display: none;
-        }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #848be2;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.2s ease;
+    }
 
-        .file-name {
-            color: #666;
-            font-style: italic;
-        }
+    button:hover {
+      background: #3843c8;
+    }
 
-        button[type="submit"] {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 10px;
-        }
+    .info {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #555;
+      line-height: 1.5;
+      background: #f9f9ff;
+      padding: 12px 15px;
+      border-radius: 8px;
+    }
 
-        button[type="submit"]:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        button[type="submit"]:active {
-            transform: translateY(-1px);
-        }
-
-        .divider {
-            text-align: center;
-            margin: 20px 0;
-            position: relative;
-        }
-
-        .divider span {
-            background: white;
-            padding: 0 15px;
-            color: #999;
-            font-weight: 600;
-            position: relative;
-            z-index: 1;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(to right, transparent, #e0e0e0, transparent);
-        }
-
-        .info-box {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-            margin-top: 20px;
-        }
-
-        .info-box p {
-            color: #555;
-            line-height: 1.6;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 30px 20px;
-            }
-
-            .header h1 {
-                font-size: 2em;
-            }
-
-            textarea {
-                min-height: 200px;
-            }
-        }
-    </style>
+    .info strong {
+      color: #848be2;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="icon">🔍</div>
-            <h1>Plagiarism Checker</h1>
-            <p>AI-powered text similarity analysis</p>
-        </div>
+  <div class="container">
+    <h1>Plagiarism Checker</h1>
+    <form action="/report" method="POST" enctype="multipart/form-data">
+      <label for="text">Paste your text:</label>
+      <textarea
+        id="text"
+        name="text"
+        placeholder="Enter or paste text to check for plagiarism..."
+      ></textarea>
 
-        <form action="/report" method="POST" enctype="multipart/form-data">
-            <div>
-                <label for="text">Paste your text here:</label>
-                <textarea name="text" id="text" placeholder="Enter the text you want to check for plagiarism..."></textarea>
-            </div>
+      <div class="divider"><span>OR</span></div>
 
-            <div class="divider">
-                <span>OR</span>
-            </div>
+      <div class="file-upload">
+        <label for="file">Choose File</label>
+        <input
+          type="file"
+          name="file"
+          id="file"
+          accept=".pdf,.docx,.txt"
+          onchange="updateFileName(this)"
+        />
+        <span class="file-name" id="file-name">No file chosen</span>
+      </div>
 
-            <div>
-                <label>Upload a document:</label>
-                <div class="file-upload-wrapper">
-                    <label for="file" class="file-label">📎 Choose File</label>
-                    <input type="file" name="file" id="file" accept=".pdf,.docx,.txt" onchange="updateFileName(this)">
-                    <span class="file-name" id="file-name">No file chosen</span>
-                </div>
-            </div>
+      <button type="submit">Check for Plagiarism</button>
 
-            <button type="submit">🚀 Analyze Text</button>
+      <div class="info">
+        <p><strong>Supported formats:</strong> PDF, DOCX, TXT</p>
+        <p><strong>Tip:</strong> Either paste text or upload a document to analyze.</p>
+      </div>
+    </form>
+  </div>
 
-            <div class="info-box">
-                <p><strong>Supported formats:</strong> PDF, DOCX, TXT files</p>
-                <p><strong>Note:</strong> Either paste text or upload a file to check for plagiarism.</p>
-            </div>
-        </form>
-    </div>
-
-    <script>
-        function updateFileName(input) {
-            const fileName = input.files[0]?.name || 'No file chosen';
-            document.getElementById('file-name').textContent = fileName;
-        }
-    </script>
+  <script>
+    function updateFileName(input) {
+      const fileName = input.files[0]?.name || "No file chosen";
+      document.getElementById("file-name").textContent = fileName;
+    }
+  </script>
 </body>
 </html>
