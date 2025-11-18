@@ -2,7 +2,7 @@ import os
 import docx2txt
 import fitz  # PyMuPDF for PDFs
 
-UPLOAD_FOLDER = "uploads"
+UPLOAD_FOLDER = "temp"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 def extract_text(file):

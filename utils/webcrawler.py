@@ -99,7 +99,8 @@ def search(query: str, num: int) -> list[str]:
         "https://alice.yandex.ru",
         "https://yabs.yandex.ru/",
         "https://translate.yandex.ru/",
-        "https://company.yandex"
+        "https://company.yandex",
+        "https://docviewer.yandex.ru/"
     ]
     black_list += user_black_list
 
@@ -191,7 +192,7 @@ def extract_text(url: str) -> str:
 
         # Handle PDFs
         if url.lower().endswith(".pdf"):
-            file_path = "temp.pdf"
+            file_path = "temp/temp.pdf"
             with open(file_path, "wb") as f:
                 f.write(response.content)
             text = extract_pdf_text(file_path)
@@ -200,7 +201,7 @@ def extract_text(url: str) -> str:
 
         # Handle DOCX
         elif url.lower().endswith(".docx"):
-            file_path = "temp.docx"
+            file_path = "temp/temp.docx"
             with open(file_path, "wb") as f:
                 f.write(response.content)
             text = extract_docx_text(file_path)

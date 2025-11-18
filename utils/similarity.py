@@ -27,22 +27,38 @@ def purify_text(string: str) -> str:
     return " ".join([word for word in words if word not in stop_words])
 
 
-def web_verify(text: str, results_per_sentence: int = 2) -> list:
-    """Fetch potential matching websites for the given text."""
+def web_verify(text: str, results_per_sentence: int = 2, chunk_size: int = 5, max_urls: int = 25) -> list:
+    """Fetch potential matching websites for the given text.
+    If the text is long, chunk sentences together (chunk_size) instead of searching one sentence at a time.
+    """
     sentences = nltk.sent_tokenize(text)
     matching_sites = set()
 
-    # Search for the entire text
+    # Search for the entire text first
     for url in webcrawler.search(query=text, num=results_per_sentence):
         matching_sites.add(url)
+    if len(matching_sites) >= max_urls:
+        print(f"Total unique URLs found: {len(matching_sites)}")
+        return list(matching_sites)[:max_urls]
 
-    # Sentence-wise search for broader coverage
-    for sentence in sentences:
-        for url in webcrawler.search(query=sentence, num=results_per_sentence):
+    #if the text is short, search sentence-by-sentence
+    if len(sentences) <= chunk_size:
+        iterable = sentences
+    else:
+        #creating non-overlapping chunks of sentences
+        iterable = []
+        for i in range(0, len(sentences), chunk_size):
+            chunk = " ".join(sentences[i : i + chunk_size])
+            iterable.append(chunk)
+
+    for piece in iterable:
+        for url in webcrawler.search(query=piece, num=results_per_sentence):
             matching_sites.add(url)
+        if len(matching_sites) >= max_urls:
+            break
 
     print(f"Total unique URLs found: {len(matching_sites)}")
-    return list(matching_sites)
+    return list(matching_sites)[:max_urls]
 
 # def tfidf_similarity(text1: str, text2: str) -> float:
 #     """Compute semantic similarity between two texts using TF-IDF cosine similarity."""
