@@ -4,8 +4,9 @@ nltk==3.9.1
 pandas==2.2.3
 requests==2.32.3
 loguru==0.7.3
-scikit-learn
-python-docx
-pypdf2
-PyMuPDF
-docx2txt
+scikit-learn==1.7.2
+python-docx==1.2.0
+pypdf2==3.0.1
+PyMuPDF==1.26.5
+docx2txt==0.9
+sentence-transformers==5.1.2

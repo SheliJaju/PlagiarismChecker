@@ -11,8 +11,8 @@ import re
 from utils import webcrawler
 
 # Download NLTK data only once
-nltk.download("stopwords", quiet=True)
-nltk.download("punkt", quiet=True)
+# nltk.download("stopwords")
+# nltk.download("punkt")
 stop_words = set(nltk.corpus.stopwords.words("english"))
 
 # "all-mpnet-base-v2" (alternate model)
