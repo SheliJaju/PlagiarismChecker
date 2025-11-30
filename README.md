@@ -9,9 +9,7 @@ A web-based plagiarism detection tool that analyzes user-submitted text or uploa
 3. **Crawling & Search** — Uses a search module to find potentially similar web pages by querying full text and individual sentences.  
 4. **History & Caching** — Maintains a SQLite-based crawl history to avoid redundant downloads, and caches extracted text for reuse.  
 5. **Text Normalization** — Lowercasing, stop-word removal, tokenization, while preserving sentence delimiters for better parsing.  
-6. **Similarity Computation** — Supports two modes:  
-   - **TF-IDF + Cosine Similarity** for quick baseline matches.  
-   - **Transformer-based embeddings** (via `sentence-transformers`) for semantic similarity and paraphrase detection.  
+6. **Similarity Computation** — **Transformer-based embeddings** (via `sentence-transformers`) for semantic similarity and paraphrase detection.  
 7. **Report Generation** — Produces an HTML report/table with clickable source URLs and similarity scores.
 
 ## Project Structure
@@ -29,9 +27,9 @@ PlagiarismChecker/
 
 ## Usage
 
-1. Clone the repo:  git clone https://github.com/SheliJaju/PlagiarismChecker.git
-2. Install dependencies:  pip install -r requirements.txt
-3. Run the application (e.g. `python main.py`) and use the web form to paste text or upload document.  
+1. Clone the repo:  ``` git clone https://github.com/SheliJaju/PlagiarismChecker.git ```
+2. Install dependencies:  ``` pip install -r requirements.txt ```
+3. Run the application using: ```python main.py ``` and use the web form to paste text or upload document.  
 4. View the generated similarity report — a table with source URLs and similarity percentage.
 
 
