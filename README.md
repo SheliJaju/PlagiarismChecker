@@ -15,7 +15,7 @@ A web-based plagiarism detection tool that analyzes user-submitted text or uploa
 7. **Report Generation** — Produces an HTML report/table with clickable source URLs and similarity scores.
 
 ## Project Structure
-
+```
 PlagiarismChecker/
 ├── main.py # Flask (or web) entrypoint and UI
 ├── utils/
@@ -25,7 +25,7 @@ PlagiarismChecker/
 ├── requirements.txt
 ├── README.md # ← this file
 └── … # other static files / templates
-
+```
 
 ## Usage
 
